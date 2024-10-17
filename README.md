@@ -16,8 +16,10 @@ This project demonstrates the application of machine learning in creating a prac
 2. [Model Training](#model-training)
 3. [Django Application](#django-application)
 4. [Deployment Options](#deployment-options)
-5. [File Structure](#file-structure)
-6. [Usage](#usage)
+5. [Environment Variables](#environment-variables)
+6. [File Structure](#file-structure)
+7. [Usage](#usage)
+8. [License](#license)
 
 ## Dataset
 
@@ -43,8 +45,8 @@ There are three main ways to deploy and use this application:
 1. **Run Locally**:
    - Clone the repository:
      ```
-     git clone https://github.com/pouryare/ecoli-dna-classification.git
-     cd ecoli-dna-classification
+     git clone https://github.com/pouryare/ecoli-classifier.git
+     cd ecoli-classifier
      ```
    - Create a virtual environment: 
      ```
@@ -53,6 +55,10 @@ There are three main ways to deploy and use this application:
      ```
    - Install requirements: `pip install -r requirements.txt`
    - Navigate to the Django project directory: `cd ecoli_project`
+   - Set the `DJANGO_ALLOWED_HOSTS` environment variable:
+     ```
+     export DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1
+     ```
    - Run migrations: `python manage.py migrate`
    - Run the Django development server: `python manage.py runserver`
    - Open a web browser and go to `http://localhost:8000`
@@ -65,7 +71,7 @@ There are three main ways to deploy and use this application:
      ```
    - Run the container: 
      ```
-     docker run -p 8000:8000 ecoli-classifier
+     docker run -p 8000:8000 -e DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1 ecoli-classifier
      ```
    - Open a web browser and go to `http://localhost:8000`
 
@@ -76,14 +82,20 @@ There are three main ways to deploy and use this application:
      ```
    - Run the container:
      ```
-     docker run -p 8000:8000 pouryare/ecoli-classifier:latest
+     docker run -p 8000:8000 -e DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1 pouryare/ecoli-classifier:latest
      ```
    - Open a web browser and go to `http://localhost:8000`
+
+Note: When deploying to a production environment, replace `localhost,127.0.0.1` with your domain name or server IP address.
+
+## Environment Variables
+
+- `DJANGO_ALLOWED_HOSTS`: A comma-separated list of host/domain names that this Django site can serve. This is a security measure to prevent HTTP Host header attacks. For local development, you can use `localhost,127.0.0.1`. In production, set this to your domain name or server IP address.
 
 ## File Structure
 ```
 ecoli-classifier/
-├── ecoli-classifier/
+├── ecoli_project/
 │   ├── ecoli_project/
 │   │   ├── __init__.py
 │   │   ├── settings.py
@@ -114,8 +126,12 @@ ecoli-classifier/
 2. Enter a DNA sequence in the input field provided.
 3. Click the "Predict" button to view the classification result.
 
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 ---
 
 This project demonstrates the application of machine learning in creating an E. coli DNA sequence classification tool with a web application interface and Docker compatibility. It serves as an excellent example of an end-to-end data science project with practical applications in bioinformatics and molecular biology.
 
-For any issues or suggestions, please open an issue on the [GitHub repository](https://github.com/pouryare/ecoli-dna-classification).
+For any issues or suggestions, please open an issue on the [GitHub repository](https://github.com/pouryare/ecoli-classifier).
